@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interaktywne Kompendium Wyceny Spółki DCF | Lyceum</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Plotly.js CDN -->
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="text-slate-900 min-h-screen">
+
+  <!-- Top Navigation & Global Header -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+          L
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold tracking-wider uppercase text-blue-600">Lyceum • Corporate Finance</span>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">SaaS Light EdTech</span>
+          </div>
+          <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">Interaktywne Kompendium Wyceny Spółki DCF</h1>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="#module8" class="hidden md:inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors">
+          ⚡ Model Sandbox
+        </a>
+        <a href="#module6" class="hidden sm:inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">
+          📊 Macierz Wrażliwości
+        </a>
+        <button id="btnOpenPythonModal" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition-colors shadow-sm">
+          <span>🐍 Skrypt Python</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Module Navigation Strip -->
+    <nav class="bg-slate-50 border-t border-slate-200 overflow-x-auto text-xs py-2 px-4 sm:px-8 flex items-center gap-4 text-slate-600 font-medium whitespace-nowrap">
+      <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Spis Modułów:</span>
+      <a href="#module1" class="hover:text-blue-600 transition-colors">1. TVM & Dyskonto</a>
+      <a href="#module2" class="hover:text-blue-600 transition-colors">2. FCFF vs FCFE</a>
+      <a href="#module3" class="hover:text-blue-600 transition-colors">3. WACC, CAPM & Hamada</a>
+      <a href="#module4" class="hover:text-blue-600 transition-colors">4. Terminal Value</a>
+      <a href="#module5" class="hover:text-blue-600 transition-colors">5. Equity Bridge</a>
+      <a href="#module6" class="hover:text-blue-600 transition-colors">6. Macierz Wrażliwości</a>
+      <a href="#module7" class="hover:text-blue-600 transition-colors">7. Monte Carlo</a>
+      <a href="#module8" class="hover:text-blue-600 transition-colors">8. Żywy Sandbox</a>
+      <a href="#module9" class="hover:text-blue-600 transition-colors">9. Kardynalne Pułapki</a>
+      <a href="#module10" class="hover:text-blue-600 transition-colors">10. Quiz</a>
+    </nav>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+    <div class="saas-card p-6 sm:p-8 bg-gradient-to-br from-white via-white to-blue-50/40 border-slate-200">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-100/70 text-blue-800 mb-3">
+          🎓 Standard Lyceum: Teoria • Wyprowadzenia • Dotykowy Sandbox
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          Od Wolnych Przepływów Gotówkowych do Rzetelnej Ceny Akcji
+        </h2>
+        <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+          Metoda DCF (Discounted Cash Flow) to złoty standard wyceny fundamentalnej w bankowości inwestycyjnej, private equity i analizie akcji. Odrzuca iluzje księgowe (zysk netto, EBITDA) i wycenia przedsiębiorstwo jako <strong>zdyskontowaną sumę całej gotówki</strong>, którą biznes jest w stanie wygenerować dla inwestorów w nieskończoności.
+        </p>
+      </div>
+
+      <!-- Quick Metrics Ribbon -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-200/80">
+        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Fundament Wyceny</div>
+          <div class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">Wolne Przepływy (FCFF)</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">Gotówka ponad zyskiem</div>
+        </div>
+        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Stopa Progowa</div>
+          <div class="text-base sm:text-lg font-bold text-blue-600 mt-0.5">WACC + Hamada</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">Ważony koszt kapitału</div>
+        </div>
+        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Waga Horyzontu</div>
+          <div class="text-base sm:text-lg font-bold text-amber-600 mt-0.5">60% – 85% w TV</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">Wartość rezydualna</div>
+        </div>
+        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Rygor Decyzyjny</div>
+          <div class="text-base sm:text-lg font-bold text-emerald-600 mt-0.5">Margin of Safety</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">Dyskonto do kursu</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-12">
+
+    <!-- ====================================================================
+         MODUŁ 1: Wartość Pieniądza w Czasie (TVM)
+         ==================================================================== -->
+    <section id="module1" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 1 • Intuicja Fizyczno-Finansowa</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Wartość Pieniądza w Czasie (Time Value of Money - TVM)</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Dlaczego 100 mln PLN za 5 lat nie jest warte 100 mln PLN dzisiaj? Poznaj mechanikę dyskonta i erozji siły nabywczej.
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Text & Formula Column -->
+        <div class="lg:col-span-5 space-y-4">
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Pieniądz otrzymany w przyszłości obarczony jest <strong>kosztem alternatywnym</strong> (utracone odsetki z inwestycji wolnej od ryzyka), <strong>ryzykiem operacyjnym</strong> (spółka może nie wygenerować przepływu) oraz <strong>inflacją</strong>.
+          </p>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono-math text-xs">
+            <div class="text-slate-500 font-sans font-semibold mb-1">Równanie Wartości Bieżącej (Present Value):</div>
+            $$PV = \frac{CF_t}{(1 + r)^t} = CF_t \cdot DF_t$$
+            <div class="mt-2 text-slate-500 font-sans text-[11px]">
+              Gdzie $CF_t$ to nominalny przepływ w roku $t$, $r$ to stopa dyskonta (WACC), a $DF_t = (1+r)^{-t}$ to współczynnik dyskontujący.
+            </div>
+          </div>
+
+          <!-- Coachmark -->
+          <div class="coachmark-box">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong>
+              1. Zmieniaj suwak <em>Stopy dyskonta</em> i obserwuj, jak drastycznie kurczą się słupki wartości bieżącej (niebieskie) względem nominalnych (błękitne).
+              2. Zwróć uwagę na żółtą linię współczynnika dyskonta (DF) na prawej osi.
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="space-y-4 pt-2">
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>Stopa Dyskonta (r):</span>
+                <span id="m1ValRate" class="font-mono text-blue-600">9.5%</span>
+              </div>
+              <input type="range" id="m1SliderRate" min="3.0" max="22.0" step="0.5" value="9.5">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>Horyzont Czasu (T):</span>
+                <span id="m1ValYears" class="font-mono text-blue-600">10 lat</span>
+              </div>
+              <input type="range" id="m1SliderYears" min="3" max="15" step="1" value="10">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>Wzrost Nominalny Przepływów (g):</span>
+                <span id="m1ValGrowth" class="font-mono text-blue-600">4.0%</span>
+              </div>
+              <input type="range" id="m1SliderGrowth" min="0.0" max="12.0" step="0.5" value="4.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>Początkowy Przepływ Rok 0 (CF₀):</span>
+                <span id="m1ValCf0" class="font-mono text-blue-600">100 mln PLN</span>
+              </div>
+              <input type="range" id="m1SliderCf0" min="20" max="300" step="10" value="100">
+            </div>
+          </div>
+
+          <!-- Summary Badges -->
+          <div class="grid grid-cols-3 gap-2 pt-2">
+            <div class="bg-blue-50/80 p-2.5 rounded-lg border border-blue-100 text-center">
+              <div class="text-[10px] uppercase font-semibold text-blue-600">Suma Nominalna</div>
+              <div id="m1SumNominal" class="text-xs sm:text-sm font-bold text-slate-900 font-mono mt-0.5">1 248 mln</div>
+            </div>
+            <div class="bg-blue-600 p-2.5 rounded-lg text-center text-white">
+              <div class="text-[10px] uppercase font-semibold text-blue-100">Suma PV (Wycena)</div>
+              <div id="m1SumPv" class="text-xs sm:text-sm font-bold font-mono mt-0.5">724 mln</div>
+            </div>
+            <div class="bg-amber-50/80 p-2.5 rounded-lg border border-amber-100 text-center">
+              <div class="text-[10px] uppercase font-semibold text-amber-700">Erozja Dyskonta</div>
+              <div id="m1ValErosion" class="text-xs sm:text-sm font-bold text-amber-900 font-mono mt-0.5">-42.0%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Plotly Chart Column -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div id="m1Chart" class="w-full h-[380px] bg-slate-50/50 rounded-xl border border-slate-200"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 2: Anatomia Wolnych Przepływów Pieniężnych (FCFF vs FCFE)
+         ==================================================================== -->
+    <section id="module2" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 2 • Dekompozycja Finansowa</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Anatomia Wolnych Przepływów: FCFF vs FCFE</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Zysk księgowy to opinia dyrektora finansowego. Prawdziwa gotówka (Free Cash Flow) to obiektywny fakt.
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Controls Column -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 font-mono-math text-xs">
+            <div class="text-slate-700 font-sans font-semibold mb-1">Równanie FCFF (Dla Wszystkich Dawców Kapitału):</div>
+            $$FCFF = \text{EBIT}(1 - t) + \text{D\&A} - \text{CapEx} - \Delta\text{NWC}$$
+            <div class="text-slate-500 font-sans text-[11px] mt-1">
+              Odsetki są pomijane, ponieważ koszt długu jest już uwzględniony w stopie dyskonta (WACC).
+            </div>
+          </div>
+
+          <!-- Coachmark -->
+          <div class="coachmark-box">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong>
+              1. Zmieniaj <em>Wydatki CapEx</em> oraz <em>Zmianę Kapitału Obrotowego (ΔNWC)</em>.
+              2. Obserwuj na wykresie wodospadowym (Waterfall), jak pozycje te redukują zysk operacyjny po opodatkowaniu (NOPAT) do ostatecznego FCFF.
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Przychody:</span>
+                <span id="m2ValRev" class="font-mono text-blue-600">1000 mln</span>
+              </div>
+              <input type="range" id="m2SliderRev" min="200" max="3000" step="50" value="1000">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Marża EBIT:</span>
+                <span id="m2ValEbit" class="font-mono text-blue-600">18.0%</span>
+              </div>
+              <input type="range" id="m2SliderEbit" min="4.0" max="35.0" step="0.5" value="18.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Podatek CIT (t):</span>
+                <span id="m2ValTax" class="font-mono text-blue-600">19.0%</span>
+              </div>
+              <input type="range" id="m2SliderTax" min="10.0" max="30.0" step="1.0" value="19.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Amortyzacja D&A (% Rev):</span>
+                <span id="m2ValDa" class="font-mono text-blue-600">6.0%</span>
+              </div>
+              <input type="range" id="m2SliderDa" min="1.0" max="15.0" step="0.5" value="6.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Nakłady CapEx (% Rev):</span>
+                <span id="m2ValCapex" class="font-mono text-blue-600">7.5%</span>
+              </div>
+              <input type="range" id="m2SliderCapex" min="1.0" max="20.0" step="0.5" value="7.5">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Zmiana ΔNWC (% Rev):</span>
+                <span id="m2ValNwc" class="font-mono text-blue-600">2.0%</span>
+              </div>
+              <input type="range" id="m2SliderNwc" min="-2.0" max="8.0" step="0.5" value="2.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Koszty Odsetkowe (FCFE):</span>
+                <span id="m2ValInterest" class="font-mono text-slate-600">22 mln</span>
+              </div>
+              <input type="range" id="m2SliderInterest" min="0" max="80" step="2" value="22">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Nowy Dług Netto (FCFE):</span>
+                <span id="m2ValBorrowing" class="font-mono text-slate-600">15 mln</span>
+              </div>
+              <input type="range" id="m2SliderBorrowing" min="-40" max="80" step="5" value="15">
+            </div>
+          </div>
+
+          <!-- Comparison Grid -->
+          <div class="grid grid-cols-2 gap-2 pt-2">
+            <div class="bg-blue-50/80 p-3 rounded-xl border border-blue-200">
+              <div class="text-[11px] font-bold text-blue-700 uppercase">Model Spółki (Entity)</div>
+              <div class="text-xs text-slate-600 mt-1">EBIT: <span id="m2OutEbit" class="font-mono font-bold text-slate-900">180 mln</span></div>
+              <div class="text-xs text-slate-600">NOPAT: <span id="m2OutNopat" class="font-mono font-bold text-slate-900">145.8 mln</span></div>
+              <div class="text-sm font-extrabold text-blue-700 mt-1">FCFF: <span id="m2OutFcff" class="font-mono">110.8 mln</span></div>
+              <div class="text-[10px] text-blue-600 mt-0.5">Dyskontowany przez WACC</div>
+            </div>
+
+            <div class="bg-emerald-50/80 p-3 rounded-xl border border-emerald-200">
+              <div class="text-[11px] font-bold text-emerald-700 uppercase">Model Akcjonariuszy (Equity)</div>
+              <div class="text-xs text-slate-600 mt-1">Zysk Netto: <span id="m2OutNetIncome" class="font-mono font-bold text-slate-900">128.0 mln</span></div>
+              <div class="text-xs text-slate-600">Dźwignia Długu: <span class="font-mono font-bold text-slate-900">Uwzględniona</span></div>
+              <div class="text-sm font-extrabold text-emerald-700 mt-1">FCFE: <span id="m2OutFcfe" class="font-mono">108.0 mln</span></div>
+              <div class="text-[10px] text-emerald-600 mt-0.5">Dyskontowany przez Koszt Kapitału (Re)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Waterfall Chart Column -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div id="m2WaterfallChart" class="w-full h-[380px] bg-slate-50/50 rounded-xl border border-slate-200"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 3: Matematyka Kosztu Kapitału (WACC, CAPM & Hamada)
+         ==================================================================== -->
+    <section id="module3" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 3 • Rygor Finansowy</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Średnioważony Koszt Kapitału (WACC) & Równanie Hamady</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Jak dług i tarcza podatkowa wpływają na koszt kapitału własnego oraz wycenę firmy.
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Explanations & Controls -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 font-mono-math text-xs space-y-2">
+            <div>
+              $$WACC = \frac{E}{V} \cdot R_e + \frac{D}{V} \cdot R_d \cdot (1 - t)$$
+            </div>
+            <div>
+              $$R_e = R_f + \beta_L \cdot ERP \quad \text{(Model CAPM)}$$
+            </div>
+            <div>
+              $$\beta_L = \beta_U \cdot \left[1 + (1 - t)\frac{D}{E}\right] \quad \text{(Równanie Hamady)}$$
+            </div>
+          </div>
+
+          <!-- Coachmark -->
+          <div class="coachmark-box">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong>
+              1. Zmieniaj proporcję długu do kapitału własnego.
+              2. Zobacz na wykresie krzywą U-kształtną: początkowo dług obniża WACC (tarcza podatkowa), ale przy nadmiernym zadłużeniu rosnące ryzyko upadłości winduje WACC w górę!
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Stopa Wolna od Ryzyka (Rf):</span>
+                <span id="m3ValRf" class="font-mono text-blue-600">5.25%</span>
+              </div>
+              <input type="range" id="m3SliderRf" min="2.0" max="9.0" step="0.25" value="5.25">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Beta Niezalewarowana (βU):</span>
+                <span id="m3ValBetaU" class="font-mono text-blue-600">0.85</span>
+              </div>
+              <input type="range" id="m3SliderBetaU" min="0.4" max="1.8" step="0.05" value="0.85">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Premia Rynkowa (ERP):</span>
+                <span id="m3ValErp" class="font-mono text-blue-600">5.50%</span>
+              </div>
+              <input type="range" id="m3SliderErp" min="3.5" max="8.0" step="0.25" value="5.50">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Podatek CIT (t):</span>
+                <span id="m3ValTax" class="font-mono text-blue-600">19.0%</span>
+              </div>
+              <input type="range" id="m3SliderTax" min="10.0" max="30.0" step="1.0" value="19.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Dług Finansowy (D):</span>
+                <span id="m3ValDebt" class="font-mono text-slate-600">350 mln</span>
+              </div>
+              <input type="range" id="m3SliderDebt" min="50" max="1500" step="25" value="350">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Kapitał Własny (E):</span>
+                <span id="m3ValEquity" class="font-mono text-slate-600">650 mln</span>
+              </div>
+              <input type="range" id="m3SliderEquity" min="200" max="2500" step="50" value="650">
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Koszt Długu Brutto (Rd):</span>
+                <span id="m3ValCostDebt" class="font-mono text-blue-600">6.80%</span>
+              </div>
+              <input type="range" id="m3SliderCostDebt" min="3.0" max="14.0" step="0.2" value="6.80">
+            </div>
+          </div>
+
+          <!-- Calculated Output Pills -->
+          <div class="grid grid-cols-3 gap-2 pt-2">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-center">
+              <div class="text-[10px] uppercase font-semibold text-slate-500">Beta Zalewar. (βL)</div>
+              <div id="m3OutBetaL" class="text-xs sm:text-sm font-bold text-slate-900 font-mono mt-0.5">1.22</div>
+            </div>
+            <div class="bg-rose-50/80 p-2.5 rounded-lg border border-rose-100 text-center">
+              <div class="text-[10px] uppercase font-semibold text-rose-700">Koszt Equity (Re)</div>
+              <div id="m3OutRe" class="text-xs sm:text-sm font-bold text-rose-900 font-mono mt-0.5">11.96%</div>
+            </div>
+            <div class="bg-emerald-50/80 p-2.5 rounded-lg border border-emerald-100 text-center">
+              <div class="text-[10px] uppercase font-semibold text-emerald-700">Dług Netto (Rd·(1-t))</div>
+              <div id="m3OutRdPost" class="text-xs sm:text-sm font-bold text-emerald-900 font-mono mt-0.5">5.51%</div>
+            </div>
+          </div>
+
+          <div class="bg-blue-600 text-white p-3.5 rounded-xl shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-xs font-semibold text-blue-100">ŚREDNIOWAŻONY KOSZT KAPITAŁU</div>
+              <div class="text-[11px] text-blue-200">Wagi: Equity <span id="m3OutWe">65%</span> | Dług <span id="m3OutWd">35%</span></div>
+            </div>
+            <div id="m3OutWacc" class="text-2xl font-extrabold font-mono">9.70%</div>
+          </div>
+        </div>
+
+        <!-- WACC vs D/E Curve Chart -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div id="m3WaccCurveChart" class="w-full h-[380px] bg-slate-50/50 rounded-xl border border-slate-200"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 4: Wartość Rezydualna (Terminal Value - TV)
+         ==================================================================== -->
+    <section id="module4" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 4 • Horyzont Wieczysty</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Wartość Rezydualna (Terminal Value) & Paradoks Horyzontu</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Aż 60-85% wartości wyceny DCF przypada na okres po szczegółowej prognozie. Poznaj dwie metody jej szacowania.
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Controls & Formulas -->
+        <div class="lg:col-span-5 space-y-4">
+          <!-- Method Selector Buttons -->
+          <div class="flex rounded-lg border border-slate-200 p-1 bg-slate-50">
+            <button id="m4BtnGordon" class="flex-1 py-1.5 text-xs font-bold rounded-md bg-blue-600 text-white transition-all shadow-sm">
+              Model Gordona (Wzrost Wieczysty g)
+            </button>
+            <button id="m4BtnMultiple" class="flex-1 py-1.5 text-xs font-bold rounded-md bg-slate-100 text-slate-700 transition-all">
+              Metoda Mnożnikowa (Exit Multiple)
+            </button>
+          </div>
+
+          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 font-mono-math text-xs">
+            $$TV = \frac{FCFF_{T+1}}{WACC - g} = \frac{FCFF_T \cdot (1 + g)}{WACC - g}$$
+            <div class="text-slate-500 font-sans text-[11px] mt-1">
+              <strong>Złota Reguła Makro:</strong> Stopa $g$ nie może przekraczać długoterminowego realnego wzrostu PKB + inflacja (zwykle 2.0% – 3.0%), inaczej spółka musiałaby w nieskończoności przerosnąć gospodarkę świata!
+            </div>
+          </div>
+
+          <!-- Coachmark -->
+          <div class="coachmark-box">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong>
+              1. Zmieniaj stopę wzrostu $g$ lub mnożnik wyjścia EV/EBITDA.
+              2. Obserwuj wykres pierścieniowy – zobacz, jak ogromną część Enterprise Value stanowi Terminal Value (zwykle ponad 70%).
+            </div>
+          </div>
+
+          <!-- Warning when g >= WACC -->
+          <div id="m4GWarning" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-300 text-rose-900 text-xs">
+            <strong>⚠️ Błąd Metodologiczny:</strong> Stopa $g \ge WACC$! Szereg geometryczny staje się rozbieżny, a wycena matematycznie dąży do nieskończoności lub wartości ujemnych. Zmniejsz $g$ lub zwiększ WACC.
+          </div>
+
+          <!-- Gordon Controls -->
+          <div id="m4GordonControls" class="space-y-3 text-xs">
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>FCFF w Ostatnim Roku Prognozy (FCFF_T):</span>
+                <span id="m4ValFcffLast" class="font-mono text-blue-600">125 mln</span>
+              </div>
+              <input type="range" id="m4SliderFcffLast" min="30" max="400" step="5" value="125">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Stopa WACC w Okresie Dojrzałości:</span>
+                <span id="m4ValWacc" class="font-mono text-blue-600">8.80%</span>
+              </div>
+              <input type="range" id="m4SliderWacc" min="5.0" max="15.0" step="0.2" value="8.80">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Długoterminowa Stopa Wzrostu (g):</span>
+                <span id="m4ValG" class="font-mono text-blue-600">2.50%</span>
+              </div>
+              <input type="range" id="m4SliderG" min="0.5" max="6.0" step="0.1" value="2.50">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Docelowy ROIC w Frazie Dojrzałości:</span>
+                <span id="m4ValRoic" class="font-mono text-blue-600">14.0%</span>
+              </div>
+              <input type="range" id="m4SliderRoic" min="6.0" max="30.0" step="1.0" value="14.0">
+            </div>
+            
+            <div class="p-2.5 bg-blue-50/60 rounded-lg border border-blue-100 text-[11px] text-blue-900 flex justify-between items-center">
+              <span>Wymagana Stopa Reinwestycji ($g / ROIC$):</span>
+              <span id="m4OutReinvestmentRate" class="font-mono font-bold text-blue-700">17.9%</span>
+            </div>
+          </div>
+
+          <!-- Multiple Controls -->
+          <div id="m4MultipleControls" class="hidden space-y-3 text-xs">
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Mnożnik Wyjścia EV / EBITDA (Exit Multiple):</span>
+                <span id="m4ValMultiple" class="font-mono text-blue-600">9.5x</span>
+              </div>
+              <input type="range" id="m4SliderMultiple" min="4.0" max="22.0" step="0.5" value="9.5">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>EBITDA w Ostatnim Roku Prognozy:</span>
+                <span id="m4ValEbitdaLast" class="font-mono text-blue-600">240 mln</span>
+              </div>
+              <input type="range" id="m4SliderEbitdaLast" min="50" max="600" step="10" value="240">
+            </div>
+          </div>
+
+          <!-- Output Cards -->
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-center">
+              <div class="text-[10px] uppercase font-semibold text-slate-500">TV Nominalne</div>
+              <div id="m4OutTvNominal" class="text-xs sm:text-sm font-bold text-slate-900 font-mono mt-0.5">2 033 mln</div>
+            </div>
+            <div class="bg-blue-50/80 p-2.5 rounded-lg border border-blue-200 text-center">
+              <div class="text-[10px] uppercase font-semibold text-blue-700">PV z TV (Dziś)</div>
+              <div id="m4OutTvPv" class="text-xs sm:text-sm font-bold text-blue-900 font-mono mt-0.5">1 334 mln</div>
+            </div>
+            <div class="bg-amber-50/80 p-2.5 rounded-lg border border-amber-200 text-center">
+              <div class="text-[10px] uppercase font-semibold text-amber-700">Udział TV w EV</div>
+              <div id="m4OutTvShare" class="text-xs sm:text-sm font-bold text-amber-900 font-mono mt-0.5">76.0%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TV Donut Chart Column -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div id="m4TvPieChart" class="w-full h-[380px] bg-slate-50/50 rounded-xl border border-slate-200"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 5: Most Wyceny: Od Enterprise Value do Ceny Akcji
+         ==================================================================== -->
+    <section id="module5" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 5 • Most Kapitałowy</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Most Wyceny: Od Enterprise Value (EV) do Ceny Akcji</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Jak przejść od wyceny całej działalności operacyjnej do wartości przypadającej na 1 akcję w rękach inwestora.
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Controls Column -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 font-mono-math text-xs">
+            $$\text{Equity Value} = EV + \text{Gotówka} - \text{Dług} + \text{Aktywa Nieoper.} - \text{Mniejszości} - \text{ESOP}$$
+            $$\text{Cena Akcji} = \frac{\text{Equity Value}}{\text{Liczba Rozwodnionych Akcji}}$$
+          </div>
+
+          <!-- Coachmark -->
+          <div class="coachmark-box">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong>
+              1. Zmieniaj stan gotówki, długu i liczbę akcji.
+              2. Obserwuj na wykresie mostkowym przejście od wartości przedsiębiorstwa (EV) do Equity Value oraz wskaźnik niedowartościowania względem kursu giełdowego.
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>PV Przepływów 5-letnich:</span>
+                <span id="m5ValPvFcff" class="font-mono text-blue-600">480 mln</span>
+              </div>
+              <input type="range" id="m5SliderPvFcff" min="100" max="1500" step="20" value="480">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>PV Wartości Rezydualnej (TV):</span>
+                <span id="m5ValPvTv" class="font-mono text-blue-600">1120 mln</span>
+              </div>
+              <input type="range" id="m5SliderPvTv" min="300" max="3000" step="50" value="1120">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Gotówka i Ekwiwalenty (+):</span>
+                <span id="m5ValCash" class="font-mono text-emerald-600">140 mln</span>
+              </div>
+              <input type="range" id="m5SliderCash" min="10" max="600" step="10" value="140">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Dług Oprocentowany Brutto (-):</span>
+                <span id="m5ValDebt" class="font-mono text-rose-600">420 mln</span>
+              </div>
+              <input type="range" id="m5SliderDebt" min="0" max="1500" step="20" value="420">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Aktywa Nieoperacyjne (+):</span>
+                <span id="m5ValNonOp" class="font-mono text-emerald-600">35 mln</span>
+              </div>
+              <input type="range" id="m5SliderNonOp" min="0" max="200" step="5" value="35">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Udziały Mniejszości (-):</span>
+                <span id="m5ValMinority" class="font-mono text-rose-600">20 mln</span>
+              </div>
+              <input type="range" id="m5SliderMinority" min="0" max="150" step="5" value="20">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Opcje Pracownicze ESOP (-):</span>
+                <span id="m5ValOptions" class="font-mono text-rose-600">15 mln</span>
+              </div>
+              <input type="range" id="m5SliderOptions" min="0" max="100" step="5" value="15">
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Liczba Akcji (Diluted):</span>
+                <span id="m5ValShares" class="font-mono text-blue-600">60.0 mln</span>
+              </div>
+              <input type="range" id="m5SliderShares" min="10" max="250" step="5" value="60">
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Aktualny Kurs Giełdowy (Benchmark):</span>
+                <span id="m5ValCurrentPrice" class="font-mono text-slate-800">20.50 PLN</span>
+              </div>
+              <input type="range" id="m5SliderCurrentPrice" min="5.0" max="60.0" step="0.5" value="20.50">
+            </div>
+          </div>
+
+          <!-- Valuation Results Cards -->
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+              <div class="text-[10px] uppercase font-semibold text-slate-500">Enterprise Value (EV)</div>
+              <div id="m5OutEv" class="text-xs sm:text-sm font-bold text-slate-900 font-mono mt-0.5">1 600 mln</div>
+            </div>
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+              <div class="text-[10px] uppercase font-semibold text-slate-500">Dług Netto (D - Cash)</div>
+              <div id="m5OutNetDebt" class="text-xs sm:text-sm font-bold text-slate-900 font-mono mt-0.5">280 mln</div>
+            </div>
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+              <div class="text-[10px] uppercase font-semibold text-slate-500">Equity Value</div>
+              <div id="m5OutEquityVal" class="text-xs sm:text-sm font-bold text-blue-700 font-mono mt-0.5">1 320 mln</div>
+            </div>
+          </div>
+
+          <div class="bg-blue-50/80 p-3.5 rounded-xl border border-blue-200 flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-bold text-blue-700 uppercase">Implikowana Wycena na Akcję</div>
+              <div id="m5OutImpliedPrice" class="text-2xl font-extrabold text-blue-900 font-mono mt-0.5">22.33 PLN</div>
+            </div>
+            <div>
+              <div id="m5OutMosBadge" class="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                Niedowartościowana (+8.9%)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bridge Waterfall Chart Column -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div id="m5BridgeChart" class="w-full h-[400px] bg-slate-50/50 rounded-xl border border-slate-200"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 6: Macierz Wrażliwości (Sensitivity Analysis)
+         ==================================================================== -->
+    <section id="module6" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 6 • Zarządzanie Ryzykiem M&A</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Macierz Wrażliwości 5×5 (WACC vs Wzrost Wieczysty g)</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Żaden profesjonalny analityk nie publikuje jednej liczby DCF. Zobacz jak cena akcji reaguje na zmiany stóp i wzrostu.
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-6">
+        <!-- Quick Scenario Buttons & Base Sliders -->
+        <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-700">Scenariusze:</span>
+            <button id="m6BtnBear" class="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition-colors">
+              🐻 Niedźwiedzi (Bear Case)
+            </button>
+            <button id="m6BtnBase" class="px-3 py-1 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm">
+              ⚖️ Bazowy (Base Case)
+            </button>
+            <button id="m6BtnBull" class="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition-colors">
+              🐂 Byczy (Bull Case)
+            </button>
+          </div>
+
+          <div class="flex items-center gap-6 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-semibold text-slate-600">Bazowy WACC:</span>
+              <span id="m6ValBaseWacc" class="font-mono font-bold text-blue-600">8.80%</span>
+              <input type="range" id="m6SliderBaseWacc" min="6.5" max="12.0" step="0.1" value="8.80" class="w-24">
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-semibold text-slate-600">Bazowe g:</span>
+              <span id="m6ValBaseG" class="font-mono font-bold text-blue-600">2.50%</span>
+              <input type="range" id="m6SliderBaseG" min="1.0" max="4.5" step="0.1" value="2.50" class="w-24">
+            </div>
+          </div>
+        </div>
+
+        <!-- Coachmark -->
+        <div class="coachmark-box">
+          <span class="text-blue-600 text-lg">👉</span>
+          <div class="text-xs text-blue-900 leading-relaxed">
+            <strong>Jak z tego korzystać:</strong>
+            Komórka oznaczona etykietą <strong>BAZA</strong> to Twój punkt wyjściowy. 
+            Kolor zielony oznacza wycenę implikowaną wyższą od bieżącego kursu giełdowego (20.50 PLN - potencjalna okazja inwestycyjna), 
+            a czerwony oznacza wycenę poniżej kursu (przewartościowanie).
+          </div>
+        </div>
+
+        <!-- The 5x5 Table -->
+        <div class="overflow-x-auto rounded-xl border border-slate-200">
+          <table class="w-full border-collapse sensitivity-table">
+            <thead id="m6TableHead">
+              <!-- Dynamically generated -->
+            </thead>
+            <tbody id="m6TableBody">
+              <!-- Dynamically generated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 7: Symulator Monte Carlo DCF
+         ==================================================================== -->
+    <section id="module7" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 7 • Symulacja Stochastyczna</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Symulator Monte Carlo: Rozkład Prawdopodobieństwa Wyceny</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Zamiast zgadywać przyszłość jedną liczbą, wylosuj 5 000 scenariuszy rynkowych i zbadaj przedziały ufności.
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Controls Column -->
+        <div class="lg:col-span-5 space-y-4">
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Silnik symulacji generuje tysiące prób stochastycznych, losując tempo wzrostu przychodów, marże EBIT, stopę WACC oraz stopę $g$ z rozkładów normalnych opartych na historycznej zmienności.
+          </p>
+
+          <!-- Coachmark -->
+          <div class="coachmark-box">
+            <span class="text-blue-600 text-lg">👉</span>
+            <div class="text-xs text-blue-900 leading-relaxed">
+              <strong>Jak z tego korzystać:</strong>
+              1. Wybierz liczbę prób i kliknij przycisk <em>Uruchom Symulację</em>.
+              2. Obserwuj na histogramie rozkład gęstości prawdopodobieństwa ceny akcji oraz dystans między medianą (P50) a kursem giełdowym (czerwona linia).
+            </div>
+          </div>
+
+          <div class="space-y-3 pt-1">
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>Liczba Iteracji Monte Carlo:</span>
+                <span id="m7ValRuns" class="font-mono text-blue-600">5 000 prób</span>
+              </div>
+              <input type="range" id="m7SliderRuns" min="1000" max="10000" step="1000" value="5000">
+            </div>
+
+            <button id="m7BtnRun" class="w-full py-2.5 px-4 text-xs font-bold rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm flex items-center justify-center gap-2">
+              <span>🚀 Uruchom Symulację Monte Carlo</span>
+            </button>
+          </div>
+
+          <!-- Percentiles Grid -->
+          <div class="grid grid-cols-2 gap-2 pt-2">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <div class="text-[11px] font-semibold text-slate-500 uppercase">Konserwatywny dół (P10)</div>
+              <div id="m7OutP10" class="text-base font-bold text-slate-900 font-mono mt-0.5">17.20 zł</div>
+              <div class="text-[10px] text-slate-500">90% szans, że wycena &gt; tej wartości</div>
+            </div>
+
+            <div class="bg-emerald-50/80 p-3 rounded-xl border border-emerald-200">
+              <div class="text-[11px] font-semibold text-emerald-700 uppercase">Mediana Szacunku (P50)</div>
+              <div id="m7OutP50" class="text-base font-bold text-emerald-900 font-mono mt-0.5">22.80 zł</div>
+              <div class="text-[10px] text-emerald-700">Wartość najbardziej prawdopodobna</div>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <div class="text-[11px] font-semibold text-slate-500 uppercase">Optymistyczna góra (P90)</div>
+              <div id="m7OutP90" class="text-base font-bold text-slate-900 font-mono mt-0.5">29.40 zł</div>
+              <div class="text-[10px] text-slate-500">Tylko 10% scenariuszy powyżej</div>
+            </div>
+
+            <div class="bg-blue-50/80 p-3 rounded-xl border border-blue-200">
+              <div class="text-[11px] font-semibold text-blue-700 uppercase">Szansa Niedowartościowania</div>
+              <div id="m7OutProb" class="text-base font-bold text-blue-900 font-mono mt-0.5">74.2%</div>
+              <div class="text-[10px] text-blue-700">Prawdopodobieństwo P(DCF &gt; Kurs)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Histogram Chart Column -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div id="m7HistogramChart" class="w-full h-[380px] bg-slate-50/50 rounded-xl border border-slate-200"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 8: Pełny Model Archetypowy Sandbox (Live Valuation)
+         ==================================================================== -->
+    <section id="module8" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 8 • Dotykowy Symulator Biznesowy</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Pełny Model Sandbox: Wycena 4 Archetypów Spółek</h3>
+        </div>
+        <div class="text-xs text-slate-500 max-w-sm">
+          Wybierz branżę lub dostosuj każdy parametr do własnej analizowanej spółki giełdowej.
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-6">
+        <!-- Archetype Tabs Strip -->
+        <div class="flex border-b border-slate-200 gap-6 overflow-x-auto text-xs font-medium pb-2">
+          <button class="archetype-tab pb-2 border-b-2 border-blue-600 text-blue-600 font-bold transition-all" data-archetype="bigtech">
+            💻 Global Big Tech
+          </button>
+          <button class="archetype-tab pb-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all" data-archetype="mature">
+            🏭 Dojrzały Przemysł / Utility
+          </button>
+          <button class="archetype-tab pb-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all" data-archetype="saas">
+            🚀 High-Growth SaaS
+          </button>
+          <button class="archetype-tab pb-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all" data-archetype="fmcg">
+            🛒 Spółka Konsumencka / FMCG
+          </button>
+        </div>
+
+        <div class="bg-blue-50/40 p-4 rounded-xl border border-blue-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h4 id="m8ArchTitle" class="text-sm font-bold text-blue-950">Global Big Tech</h4>
+            <p id="m8ArchDesc" class="text-xs text-slate-600 mt-0.5">Wysoka marża operacyjna, zwinny bilans z nadwyżką gotówki netto, silna fosy technologiczna.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-semibold text-slate-600">Koszt Re:</span>
+            <span id="m8OutReLive" class="px-2.5 py-1 bg-white font-mono font-bold text-slate-700 rounded-md border border-slate-200 text-xs">10.28%</span>
+            <span class="text-xs font-semibold text-slate-600">WACC:</span>
+            <span id="m8OutWaccLive" class="px-2.5 py-1 bg-white font-mono font-bold text-blue-600 rounded-md border border-slate-200 text-xs">8.12%</span>
+          </div>
+        </div>
+
+        <!-- Coachmark -->
+        <div class="coachmark-box">
+          <span class="text-blue-600 text-lg">👉</span>
+          <div class="text-xs text-blue-900 leading-relaxed">
+            <strong>Jak z tego korzystać:</strong>
+            Edytuj dane wejściowe w poniższych polach: prognozę przychodów, marże i bilans. 
+            Wykres i ostateczny werdykt inwestycyjny aktualizują się w czasie rzeczywistym.
+          </div>
+        </div>
+
+        <!-- Detailed Input Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs">
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Przychody Rok 0 (mln):</label>
+            <input type="number" id="m8InRev0" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold">
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Marża EBIT (%):</label>
+            <input type="number" id="m8InEbitMargin" step="0.5" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold">
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Podatek CIT (%):</label>
+            <input type="number" id="m8InTaxRate" step="1" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold">
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">CapEx / Rev (%):</label>
+            <input type="number" id="m8InCapexRatio" step="0.5" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold">
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">D&A / Rev (%):</label>
+            <input type="number" id="m8InDaRatio" step="0.5" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold">
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">ΔNWC / Rev (%):</label>
+            <input type="number" id="m8InNwcRatio" step="0.5" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold">
+          </div>
+        </div>
+
+        <!-- 5-Year Growth Projections Row -->
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div class="text-xs font-bold text-slate-700 mb-2">Prognoza Wzrostu Przychodów Rok po Roku (%):</div>
+          <div class="grid grid-cols-5 gap-2 text-xs">
+            <div>
+              <span class="text-slate-500 font-semibold">Rok 1:</span>
+              <input type="number" id="m8InGrowthY1" step="0.5" class="w-full mt-1 bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+            </div>
+            <div>
+              <span class="text-slate-500 font-semibold">Rok 2:</span>
+              <input type="number" id="m8InGrowthY2" step="0.5" class="w-full mt-1 bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+            </div>
+            <div>
+              <span class="text-slate-500 font-semibold">Rok 3:</span>
+              <input type="number" id="m8InGrowthY3" step="0.5" class="w-full mt-1 bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+            </div>
+            <div>
+              <span class="text-slate-500 font-semibold">Rok 4:</span>
+              <input type="number" id="m8InGrowthY4" step="0.5" class="w-full mt-1 bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+            </div>
+            <div>
+              <span class="text-slate-500 font-semibold">Rok 5:</span>
+              <input type="number" id="m8InGrowthY5" step="0.5" class="w-full mt-1 bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+            </div>
+          </div>
+        </div>
+
+        <!-- Capital Structure & Shares -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 text-xs">
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Stopa Rf (%):</label>
+            <input type="number" id="m8InRf" step="0.25" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Beta (β):</label>
+            <input type="number" id="m8InBeta" step="0.05" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">ERP (%):</label>
+            <input type="number" id="m8InErp" step="0.25" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Koszt Długu (%):</label>
+            <input type="number" id="m8InCostDebt" step="0.25" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Dług (mln):</label>
+            <input type="number" id="m8InDebt" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Equity (mln):</label>
+            <input type="number" id="m8InEquity" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Wzrost g (%):</label>
+            <input type="number" id="m8InG" step="0.25" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+          <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block font-semibold text-slate-700 mb-1">Gotówka (mln):</label>
+            <input type="number" id="m8InCash" class="w-full bg-white border border-slate-300 rounded px-2 py-1 font-mono">
+          </div>
+        </div>
+
+        <!-- Shares & Market Price Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between">
+            <span class="font-semibold text-slate-700">Liczba Rozwodnionych Akcji:</span>
+            <div class="flex items-center gap-1">
+              <input type="number" id="m8InShares" class="w-24 bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold text-right">
+              <span class="text-slate-500">mln sztuk</span>
+            </div>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between">
+            <span class="font-semibold text-slate-700">Bieżący Kurs Giełdowy (Market Price):</span>
+            <div class="flex items-center gap-1">
+              <input type="number" id="m8InMarketPrice" step="0.5" class="w-24 bg-white border border-slate-300 rounded px-2 py-1 font-mono font-bold text-right">
+              <span class="text-slate-500">PLN / akcję</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Verdict Banner & Chart -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-5 space-y-3">
+            <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2">
+              <div class="flex justify-between text-xs text-slate-600">
+                <span>Wartość Przepływów 5-letnich (PV):</span>
+                <span id="m8OutPvFcffVal" class="font-mono font-bold text-slate-900">820 mln</span>
+              </div>
+              <div class="flex justify-between text-xs text-slate-600">
+                <span>Wartość Rezydualna (PV TV):</span>
+                <span id="m8OutPvTvVal" class="font-mono font-bold text-slate-900">3 450 mln</span>
+              </div>
+              <div class="flex justify-between text-xs text-slate-600 border-t border-slate-100 pt-1">
+                <span>Enterprise Value (EV):</span>
+                <span id="m8OutEvVal" class="font-mono font-bold text-blue-600">4 270 mln</span>
+              </div>
+              <div class="flex justify-between text-xs text-slate-600">
+                <span>Wartość dla Akcjonariuszy (Equity):</span>
+                <span id="m8OutEqVal" class="font-mono font-bold text-slate-900">4 820 mln</span>
+              </div>
+            </div>
+
+            <!-- Implied Price Card -->
+            <div class="p-5 bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl shadow-md">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs uppercase tracking-wider text-blue-200 font-semibold">Implikowana Wycena DCF</div>
+                  <div id="m8OutImpliedShare" class="text-3xl font-black font-mono mt-1">40.17 PLN</div>
+                </div>
+                <div id="m8OutVerdictPill" class="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  Niedowartościowanie +14.2%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart -->
+          <div class="lg:col-span-7">
+            <div id="m8ProjectionsChart" class="w-full h-[320px] bg-slate-50/50 rounded-xl border border-slate-200"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 9: Typowe Błędy, Pułapki i Zniekształcenia Analityków
+         ==================================================================== -->
+    <section id="module9" class="saas-card p-6 sm:p-8">
+      <div class="pb-4 border-b border-slate-200">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-600">Moduł 9 • Audyt Jakości Wyceny</span>
+        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">5 Kardynalnych Błędów w Modelach DCF</h3>
+        <p class="text-xs text-slate-500 mt-1">Najczęstsze błędy metodologiczne, które prowadzą do fałszywych wniosków inwestycyjnych.</p>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Error 1 -->
+        <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+            <h4 class="text-sm font-bold text-rose-950">Niedopasowanie Dyskonta (Mismatch)</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Dyskontowanie wolnych przepływów dla firmy (FCFF) kosztem kapitału własnego ($R_e$) zamiast WACC. Ponieważ $R_e > WACC$, sztucznie zaniża to wycenę spółki o 20-40%!
+          </p>
+        </div>
+
+        <!-- Error 2 -->
+        <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+            <h4 class="text-sm font-bold text-rose-950">Pułapka Wynagrodzeń w Akcjach (SBC)</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Traktowanie SBC jako "bezkosztowego" wydatku bezgotówkowego i dodawanie go do gotówki, bez powiększenia liczby rozwodnionych akcji w mianowniku. Prowadzi to do drastycznego zawyżenia ceny akcji.
+          </p>
+        </div>
+
+        <!-- Error 3 -->
+        <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+            <h4 class="text-sm font-bold text-rose-950">Iluzja Wiecznego Wzrostu ($g > \text{PKB}$)</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Przyjęcie w formule Gordona stopy $g = 4\%$ lub $5\%$. W horyzoncie nieskończonym oznacza to, że spółka stałaby się większa niż cała globalna gospodarka. Złoty standard to $g \le \text{wzrost realny PKB} + \text{cel inflacyjny}$.
+          </p>
+        </div>
+
+        <!-- Error 4 -->
+        <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white text-xs font-bold flex items-center justify-center">4</span>
+            <h4 class="text-sm font-bold text-rose-950">CapEx &lt; Amortyzacja w Terminal Value</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Zakładanie, że w fazie dojrzałej nakłady inwestycyjne (CapEx) są niższe od amortyzacji. W nieskończoności majątek trwały spółki skurczyłby się do zera. W TV CapEx musi co najmniej odtwarzać zużywany majątek plus inflację.
+          </p>
+        </div>
+
+        <!-- Error 5 -->
+        <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white text-xs font-bold flex items-center justify-center">5</span>
+            <h4 class="text-sm font-bold text-rose-950">Wycena Długu po Wartości Księgowej</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            W spółkach o podwyższonym ryzyku niewypłacalności lub przy gwałtownym wzroście stóp procentowych wartość rynkowa obligacji może drastycznie odbiegać od ich wartości nominalnej w bilansie.
+          </p>
+        </div>
+
+        <!-- Error 6 -->
+        <div class="p-4 rounded-xl border border-blue-200 bg-blue-50/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">💡</span>
+            <h4 class="text-sm font-bold text-blue-950">Złota Reguła Damodarana</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Wzrost nie bierze się z próżni. Formuła $g = ROIC \times \text{Stopa Reinwestycji}$ przypomina, że każde zwiększenie tempa wzrostu $g$ wymaga obcięcia wolnych przepływów pieniężnych na rzecz nakładów reinwestycyjnych.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODUŁ 10: Interaktywny Quiz Sprawdzający Wiedzę
+         ==================================================================== -->
+    <section id="module10" class="saas-card p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Moduł 10 • Sprawdzian Zrozumienia</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Quiz Diagnostyczny: Teoria & Pułapki DCF</h3>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="bg-blue-50 px-4 py-2 rounded-xl border border-blue-200 text-xs">
+            <span class="text-slate-500 font-medium">Twój Wynik:</span>
+            <span id="quizScoreText" class="font-mono font-bold text-blue-700 text-sm ml-1">0 / 6</span>
+          </div>
+          <button id="quizResetBtn" class="px-3 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">
+            🔄 Reset
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-6 space-y-6">
+        <!-- Pytanie 1 -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <div class="font-bold text-sm text-slate-900">
+            1. Jaką stopą dyskontową należy dyskontować Wolne Przepływy dla Firmy (FCFF)?
+          </div>
+          <div class="space-y-2">
+            <button class="quiz-option quiz-opt" data-qid="q1" data-ans="A">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">A</span>
+              Koszem kapitału własnego (Re) wyliczonym z modelu CAPM.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q1" data-ans="B">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">B</span>
+              Średnioważonym kosztem kapitału (WACC), ponieważ FCFF należy do wszystkich dawców kapitału.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q1" data-ans="C">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">C</span>
+              Stopą wolną od ryzyka (Rf) powiększoną o stopę inflacji.
+            </button>
+          </div>
+          <div id="quizFb_q1" class="hidden mt-2"></div>
+        </div>
+
+        <!-- Pytanie 2 -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <div class="font-bold text-sm text-slate-900">
+            2. Co dzieje się ze współczynnikiem Beta zalewarowaną ($\beta_L$) według równania Hamady, gdy rośnie wskaźnik zadłużenia spółki ($D/E$)?
+          </div>
+          <div class="space-y-2">
+            <button class="quiz-option quiz-opt" data-qid="q2" data-ans="A">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">A</span>
+              Beta spada, ponieważ odsetki od długu zmniejszają podatek dochodowy spółki.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q2" data-ans="B">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">B</span>
+              Beta pozostaje bez zmian, bo beta odzwierciedla wyłącznie ryzyko operacyjne branży.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q2" data-ans="C">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">C</span>
+              Beta rośnie, ponieważ dźwignia finansowa zwiększa zmienność zysków przypadających na akcjonariuszy.
+            </button>
+          </div>
+          <div id="quizFb_q2" class="hidden mt-2"></div>
+        </div>
+
+        <!-- Pytanie 3 -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <div class="font-bold text-sm text-slate-900">
+            3. Dlaczego w modelu Gordona-Shapiro stopa wzrostu wieczystego ($g$) bezwzględnie musi być niższa od WACC ($WACC > g$)?
+          </div>
+          <div class="space-y-2">
+            <button class="quiz-option quiz-opt" data-qid="q3" data-ans="A">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">A</span>
+              Ponieważ przepisy prawa bilansowego zabraniają wyceny opartej o wyższe tempo wzrostu.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q3" data-ans="B">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">B</span>
+              Ponieważ suma nieskończonego szeregu geometrycznego jest zbieżna tylko dla ilorazu mniejszego od 1 (mianownik WACC - g musi być dodatni).
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q3" data-ans="C">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">C</span>
+              Wzrost g może być wyższy od WACC pod warunkiem, że spółka działa w sektorze technologicznym.
+            </button>
+          </div>
+          <div id="quizFb_q3" class="hidden mt-2"></div>
+        </div>
+
+        <!-- Pytanie 4 -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <div class="font-bold text-sm text-slate-900">
+            4. Jak w poprawnym mostku kapitałowym (Equity Bridge) przechodzimy od Enterprise Value do Equity Value?
+          </div>
+          <div class="space-y-2">
+            <button class="quiz-option quiz-opt" data-qid="q4" data-ans="A">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">A</span>
+              Dodajemy gotówkę i ekwiwalenty, odejmujemy dług finansowy brutto.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q4" data-ans="B">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">B</span>
+              Odejmujemy gotówkę i dodajemy dług brutto.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q4" data-ans="C">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">C</span>
+              Enterprise Value i Equity Value są zawsze tożsame.
+            </button>
+          </div>
+          <div id="quizFb_q4" class="hidden mt-2"></div>
+        </div>
+
+        <!-- Pytanie 5 -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <div class="font-bold text-sm text-slate-900">
+            5. Jaki błąd popełnia analityk, który dodaje do zysku koszty wynagrodzeń w akcjach (SBC) jako bezgotówkowe, nie zmieniając liczby akcji?
+          </div>
+          <div class="space-y-2">
+            <button class="quiz-option quiz-opt" data-qid="q5" data-ans="A">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">A</span>
+              Nie popełnia błędu, bo SBC nie wiąże się z fizycznym wypływem gotówki z rachunku bankowego.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q5" data-ans="B">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">B</span>
+              Zaniża wycenę spółki o wartość podatku odroczonego.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q5" data-ans="C">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">C</span>
+              Zawyża wycenę na 1 akcję, ponieważ ignoruje ekonomiczny koszt rozwodnienia obecnych akcjonariuszy.
+            </button>
+          </div>
+          <div id="quizFb_q5" class="hidden mt-2"></div>
+        </div>
+
+        <!-- Pytanie 6 -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <div class="font-bold text-sm text-slate-900">
+            6. Zgodnie z fundamentalną zależnością Damodarana, z czego wynika tempo wzrostu zysków ($g$)?
+          </div>
+          <div class="space-y-2">
+            <button class="quiz-option quiz-opt" data-qid="q6" data-ans="A">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">A</span>
+              Wyłącznie z dynamiki wydatków na marketing i reklamę.
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q6" data-ans="B">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">B</span>
+              Z iloczynu rentowności zainwestowanego kapitału (ROIC) oraz stopy reinwestycji ($g = ROIC \times RR$).
+            </button>
+            <button class="quiz-option quiz-opt" data-qid="q6" data-ans="C">
+              <span class="w-5 h-5 rounded-full border border-slate-300 text-xs flex items-center justify-center font-bold">C</span>
+              Ze wskaźnika P/E pomnożonego przez marżę brutto.
+            </button>
+          </div>
+          <div id="quizFb_q6" class="hidden mt-2"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Python Code Modal -->
+  <div id="pythonModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="p-4 sm:p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">Kompletny Silnik Wyceny DCF w Pythonie</h3>
+          <p class="text-xs text-slate-500">Model FCFF, równanie Hamady, WACC, mostek kapitałowy i symulacja Monte Carlo</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnCopyPythonCode" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm">
+            📋 Kopiuj Kod
+          </button>
+          <button id="btnClosePythonModal" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
+            ✕
+          </button>
+        </div>
+      </div>
+      <div class="p-4 sm:p-6 overflow-y-auto bg-slate-950 text-slate-200 text-xs font-mono">
+        <pre><code id="pythonCodeBlock">"""
+=============================================================================
+Lyceum DCF Valuation Engine: FCFF Model, WACC, Hamada & Monte Carlo
+=============================================================================
+"""
+import numpy as np
+from dataclasses import dataclass
+from typing import List, Tuple
+
+@dataclass
+class ValuationInputs:
+    # Okres bieżący
+    revenue_0: float        # mln PLN
+    growth_rates: List[float] # 5-letnia prognoza dynamiki przychodów (np. [0.10, 0.08, 0.07, 0.06, 0.05])
+    ebit_margin: float      # np. 0.18
+    tax_rate: float         # CIT np. 0.19
+    capex_ratio: float      # CapEx jako % przychodów
+    da_ratio: float         # Amortyzacja D&A jako % przychodów
+    nwc_ratio: float        # Zmiana NWC jako % przychodów
+    
+    # Koszt kapitału
+    rf: float               # Stopa wolna od ryzyka (np. 0.0525)
+    beta_unlevered: float   # Beta niezalewarowana (np. 0.85)
+    erp: float              # Equity Risk Premium (np. 0.055)
+    debt: float             # Wartość długu oprocentowanego (mln PLN)
+    equity_market: float    # Wartość rynkowa kapitału własnego (mln PLN)
+    cost_of_debt: float     # Oprocentowanie długu brutto (np. 0.068)
+    
+    # Wartość rezydualna (TV)
+    g: float                # Długoterminowa stopa wzrostu PKB (np. 0.025)
+    
+    # Equity Bridge
+    cash: float             # Gotówka i ekwiwalenty
+    shares_count: float     # Liczba rozwodnionych akcji (mln sztuk)
+
+class DcfValuationModel:
+    def __init__(self, inputs: ValuationInputs):
+        self.p = inputs
+
+    def calculate_wacc(self) -> Tuple[float, float, float]:
+        """Oblicza beta zalewarowaną (Hamada), koszt equity i WACC."""
+        t = self.p.tax_rate
+        d_e = self.p.debt / self.p.equity_market
+        # Równanie Hamady
+        beta_levered = self.p.beta_unlevered * (1 + (1 - t) * d_e)
+        
+        # CAPM
+        re = self.p.rf + beta_levered * self.p.erp
+        
+        # Koszt długu po tarczy podatkowej
+        rd_post = self.p.cost_of_debt * (1 - t)
+        
+        total_v = self.p.debt + self.p.equity_market
+        w_d = self.p.debt / total_v
+        w_e = self.p.equity_market / total_v
+        
+        wacc = (w_e * re) + (w_d * rd_post)
+        return wacc, re, beta_levered
+
+    def evaluate(self) -> dict:
+        wacc, re, beta_l = self.calculate_wacc()
+        assert wacc > self.p.g, "Warunek zbieżności: WACC musi być wyższy od g!"
+
+        # 5-letnia projekcja FCFF
+        cur_rev = self.p.revenue_0
+        pv_fcff_list = []
+        fcff_list = []
+
+        for year, g_rate in enumerate(self.p.growth_rates, start=1):
+            cur_rev *= (1 + g_rate)
+            ebit = cur_rev * self.p.ebit_margin
+            nopat = ebit * (1 - self.p.tax_rate)
+            da = cur_rev * self.p.da_ratio
+            capex = cur_rev * self.p.capex_ratio
+            delta_nwc = cur_rev * self.p.nwc_ratio
+            
+            fcff = nopat + da - capex - delta_nwc
+            pv = fcff / ((1 + wacc) ** year)
+            fcff_list.append(fcff)
+            pv_fcff_list.append(pv)
+
+        sum_pv_fcff = sum(pv_fcff_list)
+
+        # Wartość Rezydualna (Model Gordona)
+        terminal_fcff = fcff_list[-1] * (1 + self.p.g)
+        terminal_value = terminal_fcff / (wacc - self.p.g)
+        pv_terminal_value = terminal_value / ((1 + wacc) ** len(self.p.growth_rates))
+
+        # Enterprise Value
+        enterprise_value = sum_pv_fcff + pv_terminal_value
+
+        # Mostek kapitałowy (Equity Bridge)
+        equity_value = enterprise_value + self.p.cash - self.p.debt
+        implied_share_price = equity_value / self.p.shares_count
+
+        return {
+            "wacc": wacc,
+            "beta_levered": beta_l,
+            "pv_fcff_forecast": sum_pv_fcff,
+            "pv_terminal_value": pv_terminal_value,
+            "enterprise_value": enterprise_value,
+            "equity_value": equity_value,
+            "implied_share_price": implied_share_price,
+            "tv_share_percent": (pv_terminal_value / enterprise_value) * 100
+        }
+
+    def run_monte_carlo(self, n_simulations: int = 5000) -> dict:
+        """Symulacja Monte Carlo badająca rozkład niepewności wyceny."""
+        prices = []
+        for _ in range(n_simulations):
+            sim_growth = np.random.normal(np.mean(self.p.growth_rates), 0.02)
+            sim_margin = np.random.normal(self.p.ebit_margin, 0.025)
+            sim_wacc = np.random.normal(0.088, 0.008)
+            sim_g = min(sim_wacc - 0.005, np.random.normal(self.p.g, 0.004))
+            
+            # Uproszczona estymacja
+            rev_t = self.p.revenue_0 * ((1 + sim_growth) ** 5)
+            fcff_t = rev_t * sim_margin * (1 - self.p.tax_rate) * 0.85
+            tv = (fcff_t * (1 + sim_g)) / (sim_wacc - sim_g)
+            pv_tv = tv / ((1 + sim_wacc) ** 5)
+            
+            ev = pv_tv * 1.35 # w przybliżeniu TV stanowi ~74%
+            eq_val = max(0, ev + self.p.cash - self.p.debt)
+            price = eq_val / self.p.shares_count
+            if np.isfinite(price) and price > 0:
+                prices.append(price)
+
+        return {
+            "p10": np.percentile(prices, 10),
+            "p50_median": np.percentile(prices, 50),
+            "p90": np.percentile(prices, 90)
+        }
+
+# Przykład użycia:
+if __name__ == "__main__":
+    inputs = ValuationInputs(
+        revenue_0=1000.0,
+        growth_rates=[0.12, 0.10, 0.08, 0.06, 0.05],
+        ebit_margin=0.18,
+        tax_rate=0.19,
+        capex_ratio=0.075,
+        da_ratio=0.06,
+        nwc_ratio=0.02,
+        rf=0.0525,
+        beta_unlevered=0.85,
+        erp=0.055,
+        debt=350.0,
+        equity_market=650.0,
+        cost_of_debt=0.068,
+        g=0.025,
+        cash=140.0,
+        shares_count=60.0
+    )
+    model = DcfValuationModel(inputs)
+    results = model.evaluate()
+    mc = model.run_monte_carlo(10000)
+    
+    print(f"--- WYNIKI WYCENY DCF ---")
+    print(f"WACC: {results['wacc']*100:.2f}% | Beta_L: {results['beta_levered']:.2f}")
+    print(f"Enterprise Value: {results['enterprise_value']:.1f} mln PLN")
+    print(f"Equity Value: {results['equity_value']:.1f} mln PLN")
+    print(f"Implikowana Cena Akcji: {results['implied_share_price']:.2f} PLN")
+    print(f"Udział Terminal Value: {results['tv_share_percent']:.1f}%")
+    print(f"Monte Carlo: P10={mc['p10']:.2f} PLN, P50={mc['p50_median']:.2f} PLN, P90={mc['p90']:.2f} PLN")
+</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-900">Lyceum Interaktywne Kompendium Wyceny DCF</span>
+        <span>•</span>
+        <span>Standard SaaS Light EdTech</span>
+      </div>
+      <div>
+        Projekt edukacyjny łączący rygor akademicki z narzędziami interaktywnymi.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript App -->
+  <script src="app.js"></script>
+</body>
+</html>
