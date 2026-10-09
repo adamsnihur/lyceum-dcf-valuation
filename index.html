@@ -54,67 +54,118 @@
         </button>
       </div>
     </div>
-
-    <!-- Quick Module Navigation Strip -->
-    <nav class="bg-slate-50 border-t border-slate-200 overflow-x-auto text-xs py-2 px-4 sm:px-8 flex items-center gap-4 text-slate-600 font-medium whitespace-nowrap">
-      <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Spis Modułów:</span>
-      <a href="#module1" class="hover:text-blue-600 transition-colors">1. TVM & Dyskonto</a>
-      <a href="#module2" class="hover:text-blue-600 transition-colors">2. FCFF vs FCFE</a>
-      <a href="#module3" class="hover:text-blue-600 transition-colors">3. WACC, CAPM & Hamada</a>
-      <a href="#module4" class="hover:text-blue-600 transition-colors">4. Terminal Value</a>
-      <a href="#module5" class="hover:text-blue-600 transition-colors">5. Equity Bridge</a>
-      <a href="#module6" class="hover:text-blue-600 transition-colors">6. Macierz Wrażliwości</a>
-      <a href="#module7" class="hover:text-blue-600 transition-colors">7. Monte Carlo</a>
-      <a href="#module8" class="hover:text-blue-600 transition-colors">8. Żywy Sandbox</a>
-      <a href="#module9" class="hover:text-blue-600 transition-colors">9. Kardynalne Pułapki</a>
-      <a href="#module10" class="hover:text-blue-600 transition-colors">10. Quiz</a>
-      <a href="#module11" class="hover:text-blue-600 transition-colors">11. Źródła & Bibliografia</a>
-    </nav>
   </header>
 
-  <!-- Hero Banner -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-    <div class="saas-card p-6 sm:p-8 bg-gradient-to-br from-white via-white to-blue-50/40 border-slate-200">
-      <div class="max-w-3xl">
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-100/70 text-blue-800 mb-3">
-          🎓 Standard Lyceum: Teoria • Wyprowadzenia • Dotykowy Sandbox
-        </span>
-        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-          Od Wolnych Przepływów Gotówkowych do Rzetelnej Ceny Akcji
-        </h2>
-        <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
-          Metoda DCF (Discounted Cash Flow) to złoty standard wyceny fundamentalnej w bankowości inwestycyjnej, private equity i analizie akcji. Odrzuca iluzje księgowe (zysk netto, EBITDA) i wycenia przedsiębiorstwo jako <strong>zdyskontowaną sumę całej gotówki</strong>, którą biznes jest w stanie wygenerować dla inwestorów w nieskończoności.
-        </p>
-      </div>
+  <!-- ========================================================================= -->
+  <!-- UKŁAD DWUKOLUMNOWY (LEWY STICKY SIDEBAR + GŁÓWNA TREŚĆ)                  -->
+  <!-- ========================================================================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-8">
 
-      <!-- Quick Metrics Ribbon -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-200/80">
-        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Fundament Wyceny</div>
-          <div class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">Wolne Przepływy (FCFF)</div>
-          <div class="text-[11px] text-slate-500 mt-0.5">Gotówka ponad zyskiem</div>
+    <!-- NAWIGACJA BOCZNA (TOC) -->
+    <aside class="hidden lg:block w-72 shrink-0">
+      <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+          Nawigacja Traktatu
         </div>
-        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Stopa Progowa</div>
-          <div class="text-base sm:text-lg font-bold text-blue-600 mt-0.5">WACC + Hamada</div>
-          <div class="text-[11px] text-slate-500 mt-0.5">Ważony koszt kapitału</div>
-        </div>
-        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Waga Horyzontu</div>
-          <div class="text-base sm:text-lg font-bold text-amber-600 mt-0.5">60% – 85% w TV</div>
-          <div class="text-[11px] text-slate-500 mt-0.5">Wartość rezydualna</div>
-        </div>
-        <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Rygor Decyzyjny</div>
-          <div class="text-base sm:text-lg font-bold text-emerald-600 mt-0.5">Margin of Safety</div>
-          <div class="text-[11px] text-slate-500 mt-0.5">Dyskonto do kursu</div>
+
+        <nav class="space-y-1 text-xs">
+          <a href="#module1" class="nav-link active">
+            <span class="font-mono text-slate-400 mr-1.5">01.</span> TVM & Dyskonto
+          </a>
+          <a href="#module2" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">02.</span> FCFF vs FCFE
+          </a>
+          <a href="#module3" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">03.</span> WACC, CAPM & Hamada
+          </a>
+          <a href="#module4" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">04.</span> Terminal Value
+          </a>
+          <a href="#module5" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">05.</span> Equity Bridge
+          </a>
+          <a href="#module6" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">06.</span> Macierz Wrażliwości
+          </a>
+          <a href="#module7" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">07.</span> Monte Carlo
+          </a>
+          <a href="#module8" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">08.</span> Żywy Sandbox Wyceny
+          </a>
+          <a href="#module9" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">09.</span> Kardynalne Pułapki
+          </a>
+          <a href="#module10" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">10.</span> Quiz Diagnostyczny
+          </a>
+          <a href="#module11" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">11.</span> Źródła & Bibliografia
+          </a>
+        </nav>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="text-xs text-slate-500 font-mono mb-2">Metryki Wyceny DCF</div>
+          <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80 space-y-1.5 text-[11px] font-mono">
+            <div class="flex justify-between">
+              <span class="text-slate-500">Paradygmat:</span>
+              <span class="text-blue-600 font-bold">2-Stage FCFF</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500">Stopa Progowa:</span>
+              <span class="text-slate-700 font-bold">WACC</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500">Wycena:</span>
+              <span class="text-emerald-600 font-bold">Intrinsic Value</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </aside>
 
-  <!-- Main Content Layout -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-12">
+    <!-- GŁÓWNA PRZESTRZEŃ DYDAKTYCZNA -->
+    <main class="flex-1 space-y-8 sm:space-y-12 min-w-0">
+
+      <!-- Hero Banner -->
+      <section class="saas-card p-6 sm:p-8 bg-gradient-to-br from-white via-white to-blue-50/40 border-slate-200">
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-100/70 text-blue-800 mb-3">
+            🎓 Standard Lyceum: Teoria • Wyprowadzenia • Dotykowy Sandbox
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Od Wolnych Przepływów Gotówkowych do Rzetelnej Ceny Akcji
+          </h2>
+          <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+            Metoda DCF (Discounted Cash Flow) to złoty standard wyceny fundamentalnej w bankowości inwestycyjnej, private equity i analizie akcji. Odrzuca iluzje księgowe (zysk netto, EBITDA) i wycenia przedsiębiorstwo jako <strong>zdyskontowaną sumę całej gotówki</strong>, którą biznes jest w stanie wygenerować dla inwestorów w nieskończoności.
+          </p>
+        </div>
+
+        <!-- Quick Metrics Ribbon -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-200/80">
+          <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Fundament Wyceny</div>
+            <div class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">Wolne Przepływy (FCFF)</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">Gotówka ponad zyskiem</div>
+          </div>
+          <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Stopa Progowa</div>
+            <div class="text-base sm:text-lg font-bold text-blue-600 mt-0.5">WACC + Hamada</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">Ważony koszt kapitału</div>
+          </div>
+          <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Waga Horyzontu</div>
+            <div class="text-base sm:text-lg font-bold text-amber-600 mt-0.5">60% - 85% w TV</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">Wartość rezydualna</div>
+          </div>
+          <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Rygor Decyzyjny</div>
+            <div class="text-base sm:text-lg font-bold text-emerald-600 mt-0.5">Margin of Safety</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">Dyskonto do kursu</div>
+          </div>
+        </div>
+      </section>
+
 
     <!-- ====================================================================
          MODUŁ 1: Wartość Pieniądza w Czasie (TVM)
@@ -1426,6 +1477,7 @@
     </section>
 
   </main>
+  </div>
 
   <!-- Python Code Modal -->
   <div id="pythonModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
